@@ -23,6 +23,6 @@ module.exports = function(app) {
 
   app.post("/api/auth/signin", controller.signin);
 
-  app.get("/api/rooms",controller1.roomGetAll);
+  //app.get("/api/rooms",controller1.roomGetAll);
   
 };

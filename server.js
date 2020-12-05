@@ -6,11 +6,12 @@ const mongoose = require('mongoose')
 const app = express();
 
 //Connect to DB
-/*mongoose.connect('mongodb+srv://rached:inchalah.@cluster0.rmtn8.mongodb.net/<dbname>?retryWrites=true&w=majority',
-{useNewUrlParser: true},
-()=>console.log('connetcted to DB!'));*/
+/*mongoose.connect(
+    'mongodb+srv://rached:inchalah.@cluster0.rmtn8.mongodb.net/<dbname>?retryWrites=true&w=majority',
+    {useNewUrlParser: true},
+    ()=>console.log('connetcted to DB!'));
 
-
+*/
 var corsOptions = {
     origin: "http://localhost:8081"
 };
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./app/models");
 const Role = db.role;
+
 db.mongoose
     .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
         useNewUrlParser: true,
@@ -49,7 +51,7 @@ app.get("/user", (req, res) => {
 // routes
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
-
+app.use('/rooms', require("./app/routes/rooms.routes"));
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

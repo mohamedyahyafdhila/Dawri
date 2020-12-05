@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 
-const Room = mongoose.model(
-  "Rooms",
-  new mongoose.Schema({
-    name: String,
-    max_client: Number,
-    duration: Number,
-    owner: User
-  })
-);
+const roomSchema = mongoose.Schema({
+    name:  {type: String, required: true},
+    category_name:{type: String, required: true},
+    max_client:  {type: Number, required: true},
+    duration: {type: Number, required: true},
+    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  });
 
-module.exports = Room;
+
+module.exports = mongoose.model('Room',roomSchema);

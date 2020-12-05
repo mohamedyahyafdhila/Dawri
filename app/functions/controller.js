@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 const model  = require('../models');
 const roomModel  = model.room;
 
@@ -30,9 +30,9 @@ exports.roomGetAll = (req, res, next) =>{
             error: err
         })
     });
-}/*
+}
 module.exports = {
-    /*
+    
     studentGetOne: (req, res, next) =>{
         studentModel.findById(req.params.id)
         .exec()

@@ -6,17 +6,17 @@ const mongoose = require('mongoose')
 const app = express();
 
 //Connect to DB
-/*mongoose.connect(
-    'mongodb+srv://rached:inchalah.@cluster0.rmtn8.mongodb.net/<dbname>?retryWrites=true&w=majority',
+mongoose.connect(
+    'mongodb+srv://dawri:dawri@cluster0.op6r5.mongodb.net/dawri?retryWrites=true&w=majority',
     {useNewUrlParser: true},
     ()=>console.log('connetcted to DB!'));
 
-*/
+
 var corsOptions = {
     origin: "http://localhost:8081"
 };
 
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = require("./app/models");
 const Role = db.role;
 
+/*
 db.mongoose
     .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
         useNewUrlParser: true,
@@ -39,7 +40,7 @@ db.mongoose
     .catch(err => {
         console.error("Connection error", err);
         process.exit();
-    });
+    });*/
 // simple route
 app.get("/", (req, res) => {
     res.json({ message: "Connected Succefully ." });

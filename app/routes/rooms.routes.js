@@ -97,13 +97,14 @@ router.get('/:roomId', (req,res,next) => {
     });
     
 });
-router.patch('/:roomId', (req,res,next) => {
-    const id = req.params.roomId;
+/*
+router.patch('/:name', (req,res,next) => {
+    const name = req.params.name;
     const updateOps= {};
     for(const ops of req.body ){
         updateOps[ops.propName]= ops.value;
     }
-    Room.update({_id: id},{$set: updateOps})
+    Room.update({name: name},{$set: updateOps})
     .exec()
     .then(result => {
         console.log(result);
@@ -114,6 +115,22 @@ router.patch('/:roomId', (req,res,next) => {
         res.status(500).json({error: err});
     });
 });
+*/
+router.patch('/:name', (req,res,next) => {
+    const name = req.params.name;
+   
+    Room.update({name: name},{$set: {max_client: req.body.newMax_client, duration: req.body.newDuration}})
+    .exec()
+    .then(result => {
+        console.log(result);
+        res.status(200).json(result);
+    })
+    .catch(err => {
+        console.log(err); 
+        res.status(500).json({error: err});
+    });
+});
+
 router.delete('/:roomId', (req,res,next) => {
     const id = req.params.roomId;
     Room.remove({_id: id})
@@ -126,4 +143,40 @@ router.delete('/:roomId', (req,res,next) => {
         res.status(500).json({error: err});
     });
 });
-module.exports = router;
+
+
+router.post('/updateroom' ,(req,res,next) => {
+    Room.findOne({
+        name: req.body.name
+      })
+        .exec((err, room) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+    
+          room.name=req.body.name,
+          room.max_client=req.body.max_client,
+          room.duration=req.body.duration
+          
+    
+          room.save(err => {
+            if (err) {
+              res.status(500).send({ message: err });
+              return;
+            }
+    
+            res.status(200).send({
+            
+            
+                name: room.name,
+                max_client:room.max_client,
+                duration: room.duration,
+              
+            });      });
+         // user.password= bcrypt.hashSync(req.body.password, 8)
+        
+        });
+    });
+
+    module.exports = router;

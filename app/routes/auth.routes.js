@@ -12,6 +12,10 @@ module.exports = function(app) {
     next();
   });
 
+  app.get("/auth", (req, res) => {
+    res.json({ message: "Authentication ." });
+});
+
   app.post(
     "/api/auth/signup",
     [

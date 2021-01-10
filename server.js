@@ -6,26 +6,37 @@ const mongoose = require('mongoose')
 const app = express();
 
 //Connect to DB
-mongoose.connect(
-    'mongodb+srv://dawri:dawri@cluster0.op6r5.mongodb.net/dawri?retryWrites=true&w=majority',
-    {useNewUrlParser: true},
-    ()=>console.log('connetcted to DB!'));
+const db = require("./app/models");
+const Role = db.role;
+// mongoose.connect(
+//     'mongodb+srv://dawri:dawri@cluster0.op6r5.mongodb.net/dawri?retryWrites=true&w=majority',
+//     {useNewUrlParser: true},
+//     ()=>console.log('connetcted to DB!'));
+
+    db.mongoose.connect("mongodb+srv://dawri:dawri@cluster0.op6r5.mongodb.net/dawri?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+        console.log("Connected to Database");
+        }).catch((err) => {
+            console.log("Not Connected to Database ERROR! ", err);
+        });
 
 
 var corsOptions = {
     origin: "http://localhost:8081"
 };
 
-//app.use(cors(corsOptions));
+app.use(cors(corsOptions));
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
-const db = require("./app/models");
-const Role = db.role;
 
 /*
 db.mongoose
